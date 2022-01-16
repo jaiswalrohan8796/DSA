@@ -87,12 +87,14 @@ class LinkedList {
             return node.data;
         } else {
             let p = this.start;
-            let idx = 0;
-            while (idx != pos - 1) {
+            let idx = 1;
+            while (idx != (pos) && p.next != null) {
                 p = p.next;
+                idx++
             }
-            let node = p.next;
-            p.next = p.next.next;
+            let node = p;
+            let temp = p.next.next;
+            p.next = temp;
             return node.data;
         }
     }
@@ -186,5 +188,5 @@ lst.appendAtEnd(1);
 lst.appendAtEnd(5);
 lst.appendAtEnd(4);
 lst.appendAtEnd(2);
-lst.sort();
+lst.popAtPos(3);
 lst.print();
