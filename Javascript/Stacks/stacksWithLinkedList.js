@@ -58,4 +58,4 @@ stack.push(31);
 stack.push(41);
 stack.push(51);
 stack.push(60);
-console.log(stack.isEmpty());
+console.log(stack.peek());
