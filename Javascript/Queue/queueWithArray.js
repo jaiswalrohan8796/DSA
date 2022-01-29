@@ -34,11 +34,30 @@ Queue.prototype.dequeue = function () {
 };
 
 Queue.prototype.print = function () {
-    console.log(this.queue);
-    console.log(
-        `Front : ${this.queue[this.front]} \nBack : ${this.queue[this.rear]}`
-    );
+    console.log(`Queue : ${this.queue}`);
+};
+
+Queue.prototype.peekFront = function () {
+    if(this.queue.length == 0) {
+        console.log(`Queue is underflowed`)
+        return
+    }
+    console.log(`Front : ${this.queue[this.front]}`);
+    return this.queue[this.front];
+};
+
+Queue.prototype.peekRear = function () {
+    if(this.queue.length == 0) {
+        console.log(`Queue is underflowed`)
+        return
+    }
+    console.log(`Rear : ${this.queue[this.rear]}`);
+    return this.queue[this.rear];
+};
+
+Queue.prototype.length = function () {
     console.log(`Size : ${this.size}`);
+    return this.size;
 };
 
 let queue = new Queue();
@@ -49,4 +68,11 @@ queue.enqueue(2);
 queue.enqueue(1);
 queue.dequeue();
 queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
 queue.print();
+queue.peekFront();
+queue.peekRear();
+queue.length();
