@@ -1,6 +1,7 @@
 class Node {
     constructor(data) {
-        (this.data = data), (this.next = null);
+        this.data = data;
+        this.next = null;
     }
 }
 
@@ -88,9 +89,9 @@ class LinkedList {
         } else {
             let p = this.start;
             let idx = 1;
-            while (idx != (pos) && p.next != null) {
+            while (idx != pos && p.next != null) {
                 p = p.next;
-                idx++
+                idx++;
             }
             let node = p;
             let temp = p.next.next;
@@ -187,6 +188,13 @@ let lst = new LinkedList();
 lst.appendAtEnd(1);
 lst.appendAtEnd(5);
 lst.appendAtEnd(4);
+lst.appendAtEnd(7);
+lst.appendAtEnd(9);
+lst.appendAtEnd(6);
 lst.appendAtEnd(2);
+lst.appendAtBegining(0)
 lst.popAtPos(3);
+lst.popByData(2)
+lst.sort()
+lst.reverse()
 lst.print();
