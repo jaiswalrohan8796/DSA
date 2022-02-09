@@ -5,7 +5,7 @@ function Node(data) {
 
 function Queue() {
     this.head = null;
-    this.next = null;
+    
 }
 
 Queue.prototype.enqueue = function (data) {
