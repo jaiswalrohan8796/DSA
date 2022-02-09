@@ -21,6 +21,9 @@ function preOrder(root) {
         preOrder(root.left)
         preOrder(root.right)
     }
+    else{
+        console.log(null)
+    }
 }
 
 function postOrder(root) {
