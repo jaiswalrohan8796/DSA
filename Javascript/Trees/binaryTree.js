@@ -34,6 +34,24 @@ function postOrder(root) {
     }
 }
 
+function levelOrder(root) {
+    let stack = []
+    stack.push(root)
+    let ans = []
+    while(stack.length != 0) {
+        node = stack.shift()
+        ans.push(node.data)
+        if(node.left) {
+            stack.push(node.left)
+        }
+        if(node.right) {
+            stack.push(node.right)
+        }
+    }
+    console.log(ans)
+}
+
+
 bt = new Node(1)
 bt.left = new Node(2)
 bt.right = new Node(3)
@@ -46,3 +64,5 @@ console.log("Preorder")
 preOrder(bt)
 console.log("Postorder")
 postOrder(bt)
+console.log("Levelorder")
+levelOrder(bt)
