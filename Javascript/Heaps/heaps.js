@@ -59,8 +59,7 @@ MaxHeap.prototype.heapifyTopDown = function () {
 };
 MaxHeap.prototype.delete = function () {
     //delete the root(1st element) & place the last element of array at its position
-    this.heap.shift();
-    this.heap.splice(1, 0, this.heap.pop()); // remember first elem is null.
+    this.heap.splice(1, 1, this.heap.pop()); // remember first elem is null.
 
     //after this modification heap property me be disturbed, so heapify
     this.heapifyTopDown();
@@ -79,4 +78,4 @@ hp.print(); // [ 7, 4, 6, 1, 3, 2 ]
 hp.delete(); // [ 6, 4, 2, 1, 3 ]
 hp.delete(); // [ 4, 3, 2, 1 ]
 
-hp.print();// // [ 4, 3, 2, 1 ]
+hp.print(); // // [ 4, 3, 2, 1 ]
