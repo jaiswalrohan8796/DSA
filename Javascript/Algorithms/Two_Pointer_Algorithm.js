@@ -1,3 +1,8 @@
+//TWO POINTER ALGORITHM
+//Use Case :- To find a pair (by condition) in a sorted array
+//Big-O: - O(n)
+
+//Question
 //https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/submissions/
 
 var twoSum = function (numbers, target) {
