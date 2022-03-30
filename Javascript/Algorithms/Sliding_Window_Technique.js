@@ -1,8 +1,9 @@
 //SLIDING WINDOW TECHNIQUE
 
-//Sliding window is a technique used for finding contigenous sub-sequence from a larger sequence that satisfies the given condition
+//Sliding window is a technique used for finding contigous sub-sequence from a larger sequence that satisfies the given condition
 //Window can be statically sized or dynamic depending on the problem
 //Maintain a subset (window) of your required size & move that window till you find the solution
+//Usually has O(N)
 
 //Fixed Size Sliding window
 
