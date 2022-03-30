@@ -31,29 +31,35 @@ console.log(maxSum(nums, k));
 
 //Find the sub-arrays that adds up to the given numbers
 
-let array = [1, 7, 4, 3, 1, 2, 1, 5, 1];
+let array = [1, 7, 4, 3, 1, 2, 1, 5, 0];
 let target = 7;
 
 function targetSum(nums, target) {
     let res = [];
     let start = 0;
     let end = 0;
-    let sum = 0;
-    while (end <= nums.length) {
-        sum += nums[end];
-        if (sum == target) {
-            res.push([start, end]);
-            end++;
-        }
-        if (target > sum) {
-            end++;
-        }
-        if (target < sum) {
-            sum -= nums[start];
-            start++;
+    let currSum = 0;
+    while (start < nums.length && end < nums.length) {
+        if (currSum == target) {
+            res.push([start, end - 1]);
+
+            if (end <= nums.length - 1) {
+                currSum += nums[end];
+                end++;
+            }
+        } else {
+            if (currSum > target) {
+                currSum -= nums[start];
+                start++;
+            } else {
+                if (end <= nums.length - 1) {
+                    currSum += nums[end];
+                    end++;
+                }
+            }
         }
     }
     return res;
 }
 
-// console.log(targetSum(array, target));
+console.log(targetSum(array, target));
