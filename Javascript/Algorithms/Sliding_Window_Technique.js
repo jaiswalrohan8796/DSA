@@ -14,11 +14,11 @@ let k = 3;
 
 function maxSum(nums, k) {
     let start = 0;
-    let end = k - 1;
+    let end = k;
     let maxm = Number.MIN_SAFE_INTEGER; // Most minimum number possible
 
     //Calculating the sum of first window (0,k-1). So that we wont need to calc. sum after every step
-    let sum = nums.slice(start, end + 1).reduce((acc, v) => acc + v, 0);
+    let sum = nums.slice(start, end).reduce((acc, v) => acc + v, 0);
     for (let i = k; i < nums.length; i++) {
         sum += nums[i] - nums[i - k];
         maxm = Math.max(maxm, sum);
@@ -30,9 +30,9 @@ console.log(maxSum(nums, k));
 
 //Variable Size Sliding window
 
-//Find the sub-arrays that adds up to the given numbers
+//Find the sub-arrays that adds up to the given positive numbers
 
-let array = [1, 7, 4, 3, 1, 2, 1, 5, 0];
+let array = [1, 7, 4, 3, 1, 2, 1, 5, 1];
 let target = 7;
 
 function targetSum(nums, target) {
@@ -43,24 +43,40 @@ function targetSum(nums, target) {
     while (start < nums.length && end < nums.length) {
         if (currSum == target) {
             res.push([start, end - 1]);
-
-            if (end <= nums.length - 1) {
+            if (end < nums.length) {
                 currSum += nums[end];
                 end++;
             }
         } else {
             if (currSum > target) {
-                currSum -= nums[start];
-                start++;
+                if (start < nums.length) {
+                    currSum -= nums[start];
+                    start++;
+                }
             } else {
-                if (end <= nums.length - 1) {
+                if (end < nums.length) {
                     currSum += nums[end];
                     end++;
                 }
             }
         }
     }
+    if (currSum > target) {
+        if (start < nums.length) {
+            currSum -= nums[start];
+            start++;
+        }
+    } else {
+        if (end < nums.length) {
+            currSum += nums[end];
+            end++;
+        }
+    }
+    if (currSum == target) {
+        res.push([start, end - 1]);
+    }
+    console.log(start, end, currSum);
     return res;
 }
 
-console.log(targetSum(array, target));
+// console.log(targetSum(array, target));

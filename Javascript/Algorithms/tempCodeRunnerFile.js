@@ -1,1 +1,1 @@
-console.log(maxSum(nums, k));
+console.log(targetSum(array, target));
