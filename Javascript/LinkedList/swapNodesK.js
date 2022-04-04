@@ -31,5 +31,24 @@ var swapNodes = function(head, k) {
 //Start tarversing both node slow(from start) & fast(from kth node) untill fast.next == null. Slow will always stop at (n - k)th node. Grab the second value
 //Switch the value
 
+var swapNodes = function(head, k) {
+    let slow = head
+    let fast = head
+    k -= 1
+    while(k--) {
+        fast = fast.next
+    }
+    let first = fast
+    while(fast && fast.next != null) {
+        slow = slow.next
+        fast = fast.next
+    }
+    let sec = slow
+    let temp = first.val
+    first.val = sec.val
+    sec.val = temp
+    return head
+};
+
 // Input: head = [1,2,3,4,5], k = 2
 // Output: [1,4,3,2,5]
