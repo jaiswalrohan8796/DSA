@@ -26,5 +26,10 @@ var swapNodes = function(head, k) {
     return head
 };
 
+//Optimized approach => slow & fast pointers.
+//1. Bring fast pointer to kth node of list & store the first val
+//Start tarversing both node slow(from start) & fast(from kth node) untill fast.next == null. Slow will always stop at (n - k)th node. Grab the second value
+//Switch the value
+
 // Input: head = [1,2,3,4,5], k = 2
 // Output: [1,4,3,2,5]
