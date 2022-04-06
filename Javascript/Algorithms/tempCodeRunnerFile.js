@@ -1,1 +1,0 @@
-console.log(targetSum(array, target));
