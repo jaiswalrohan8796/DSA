@@ -16,6 +16,17 @@ var middleNode = function (head) {
     return p;
 };
 
+//Two pointer approach
+var middleNode2 = function (head) {
+    let slow = node;
+    let fast = node;
+    while (fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return slow.data;
+};
+
 /*
 Input: head = [1,2,3,4,5]
 Output: [3,4,5]
