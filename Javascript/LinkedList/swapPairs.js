@@ -10,5 +10,19 @@ var swapPairs = function (head) {
     return v2;
 };
 
+//https://practice.geeksforgeeks.org/problems/pairwise-swap-elements-of-a-linked-list-by-swapping-data
+var swapPairs = function(node) {
+    let curr = node
+    while(curr && curr.next) {
+        let first = curr
+        let second = curr.next
+        let temp = first.data
+        first.data = second.data
+        second.data = temp
+        curr = curr.next.next
+    }
+    return node
+}
+
 // Input: head = [1,2,3,4]
 // Output: [2,1,4,3]
