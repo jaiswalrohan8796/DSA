@@ -16,5 +16,20 @@ var preorder = function(root) {
 };
 
 
+var postorder = function(root) {
+    let res = []
+    function preOrder(node) {
+        if(!node) return
+        if(node.children) {
+            for(let child of node.children) {
+                preOrder(child)
+            }
+        }
+        res.push(node.val)
+    }
+    preOrder(root)
+    return res
+};
+
 // Input: root = [1,null,3,2,4,null,5,6]
 // Output: [1,3,5,6,2,4]
