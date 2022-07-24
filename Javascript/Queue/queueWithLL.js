@@ -5,79 +5,72 @@ function Node(data) {
 
 function Queue() {
     this.head = null;
-    
+    this.tail = null;
 }
 
+Queue.prototype.isEmpty = function () {
+    console.log(!this.head);
+    return !this.head;
+};
+
 Queue.prototype.enqueue = function (data) {
-    let newnode = new Node(data);
-    if (this.head == null) {
-        this.head = newnode;
-        console.log(`Enqueued : ${data}`);
+    //new Node
+    let newNode = new Node(data);
+    //chek if empty
+    if (this.isEmpty()) {
+        this.head = this.tail = newNode;
     } else {
-        let curr = this.head;
-        while (curr.next) {
-            curr = curr.next;
-        }
-        curr.next = newnode;
-        console.log(`Enqueued : ${data}`);
+        this.tail.next = newNode;
+        this.tail = this.tail.next;
     }
+    console.log(`Enqueued ${data}`);
 };
 
 Queue.prototype.dequeue = function () {
-    if (this.head == null) {
-        console.log(`Queue is undeflowed`);
-        return null;
+    if (this.isEmpty()) {
+        console.log(`Queue Empty`);
+        return;
     } else {
-        let temp = this.head;
+        let node = this.head;
         this.head = this.head.next;
-        console.log(`Dequeued : ${temp.data}`);
-        return temp.data;
+        if (this.head == null) {
+            this.tail = null;
+        }
+        console.log(`Dequeued ${node.data}`);
+        return node.data;
     }
 };
 
 Queue.prototype.print = function () {
     let ans = [];
     if (this.head == null) {
-        console.log(ans);
-        return null;
+        console.log(`Queue Empty`);
     } else {
-        let curr = this.head;
+        let curr = this.head
         while (curr) {
             ans.push(curr.data);
             curr = curr.next;
         }
         console.log(`Queue : ${ans}`);
-        return null;
     }
 };
 
 Queue.prototype.front = function () {
     if (this.head == null) {
         console.log(`Queue is underflowed`);
-        return null;
     } else {
-        console.log(`Front : ${this.head.data}`);
+        console.log(`Head : ${this.head.data}`);
         return this.head.data;
     }
 };
 
 Queue.prototype.back = function () {
-    if (this.head == null) {
+    if (this.tail == null) {
         console.log(`Queue is underflowed`);
-        return null;
     } else {
-        let curr = this.head;
-        while (curr.next) {
-            curr = curr.next;
-        }
-        console.log(`Back : ${curr.data}`);
-        return curr.data;
+        console.log(`Tail : ${this.tail.data}`);
+        return this.tail.data;
     }
-};
-
-Queue.prototype.isEmpty = function () {
-    console.log(`isEmpty : ${!this.head}`);
-    return !this.head;
 };
 
 Queue.prototype.size = function () {
@@ -103,8 +96,8 @@ queue.enqueue(3);
 queue.enqueue(2);
 queue.enqueue(1);
 queue.dequeue();
+queue.print();
 queue.front();
 queue.back();
-queue.print();
 queue.isEmpty();
 queue.size();
