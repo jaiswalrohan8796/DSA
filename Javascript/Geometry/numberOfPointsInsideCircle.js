@@ -30,3 +30,7 @@ var countPoints = function(points, queries) {
 // Output: [3,2,2]
 // Explanation: The points and circles are shown above.
 // queries[0] is the green circle, queries[1] is the red circle, and queries[2] is the blue circle.
+
+
+//How to check if a point lies inside a circle
+// Mathematically,condition for point ot lie inside a circle is  (center_x - point_x)^2 + (center_y - point_y)^2 <= radius*radius
