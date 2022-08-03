@@ -13,3 +13,23 @@ function subsets(nums) {
 
 	return powerset;
 }
+
+
+function subsets(nums) {
+	let res = []
+    let ss = []
+    function dfs(i) {
+        if(i >= nums.length) {
+            res.push([...ss])
+            return
+        }
+        ss.push(nums[i])
+        //take the element
+        dfs(i+1)
+        //dont take the element
+        ss.pop()
+        dfs(i+1)
+    }
+    dfs(0)
+    return res
+}
