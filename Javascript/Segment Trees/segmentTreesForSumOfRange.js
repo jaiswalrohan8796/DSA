@@ -9,8 +9,16 @@ class Node {
     }
 }
 
+//Segment Tree
 class NumArray {
     constructor(nums) {
+        /**
+         *
+         * @param {Array} nums : an array of integers
+         * @param {Number} l : start index of array
+         * @param {Number} r : last index of array
+         * @returns {Node}: root node of Segment Tree
+         */
         function createNums(nums, l, r) {
             //exception case (terminate)
             if (l > r) return null;
@@ -34,6 +42,13 @@ class NumArray {
         this.root = createNums(nums, 0, nums.length - 1);
     }
     update(pos, val) {
+        /**
+         *
+         * @param {Node} root : Node at which operations happens
+         * @param {Number} pos : index at which to update
+         * @param {Number} val : value to insert
+         * @returns
+         */
         function updateVal(root, pos, val) {
             //base case
             if (root.start == root.end) {
@@ -57,6 +72,13 @@ class NumArray {
         return updateVal(this.root, pos, val);
     }
     rangeSum(i, j) {
+        /**
+         *
+         * @param {Node} root : Node at which operation starts
+         * @param {Number} i : left index of range
+         * @param {Number} j : right index of range
+         * @returns {Number} : sum of the range
+         */
         function rangeSumHelper(root, i, j) {
             //base case
             if (root.start == i && root.end == j) {
