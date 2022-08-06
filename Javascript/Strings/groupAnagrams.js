@@ -1,4 +1,4 @@
-// /https://leetcode.com/problems/group-anagrams/submissions/
+//https://leetcode.com/problems/group-anagrams/submissions/
 
 var groupAnagrams = function (strs) {
     let map = {};
