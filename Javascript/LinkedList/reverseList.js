@@ -20,3 +20,14 @@ var reverseList = function (head) {
     }
     return prev;
 };
+
+//recursive reverse
+function revRecur(head) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+    let newH = revRecur(head.next);
+    head.next.next = head;
+    head.next = null;
+    return newH;
+}

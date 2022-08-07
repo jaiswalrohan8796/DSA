@@ -137,7 +137,7 @@ G.addEdge(5, 6);
 G.addEdge(5, 7);
 G.addEdge(6, 5);
 G.addEdge(7, 5);
-
+G.printList()
 console.log(G.bfs(1));
 console.log(G.dfs(1));
 console.log(G.dfsPostOrder(1));
