@@ -1,32 +1,30 @@
 //https://leetcode.com/problems/add-two-numbers/submissions/
 
 var addTwoNumbers = function (l1, l2) {
-    let num1 = [];
-    let curr1 = l1;
-    while (curr1) {
-        num1.push(curr1.val);
-        curr1 = curr1.next;
+    let dummy = new ListNode(0);
+    let curr = dummy;
+    let sum = 0;
+    while (l1 || l2) {
+        if (l1) {
+            sum += l1.val;
+            l1 = l1.next;
+        }
+        if (l2) {
+            sum += l2.val;
+            l2 = l2.next;
+        }
+        curr.next = new ListNode(Math.floor(sum % 10));
+        curr = curr.next;
+        sum = Math.floor(sum / 10);
     }
-    let num2 = [];
-    let curr2 = l2;
-    while (curr2) {
-        num2.push(curr2.val);
-        curr2 = curr2.next;
+    if (sum != 0) {
+        curr.next = new ListNode(sum);
     }
-    [num1, num2] = [num1.reverse(), num2.reverse()];
-    num1 = BigInt(num1.join(""));
-    num2 = BigInt(num2.join(""));
-    let ans = String(num1 + num2);
-    ans = ans.split("").reverse();
-    var llst = new ListNode(0);
-    let temp = llst;
-    while (ans.length) {
-        llst.next = new ListNode(ans.splice(0, 1));
-        llst = llst.next;
-    }
-    return temp.next;
+    return dummy.next;
 };
 
+//Intuition :
+//Number are given in reverse order but we can sum up that in the given order by summing up the every nodes. To manager carry, sum up  sum % 10 & carry sum integer division by 10
 /*
 Input: l1 = [2,4,3], l2 = [5,6,4]
 Output: [7,0,8]
