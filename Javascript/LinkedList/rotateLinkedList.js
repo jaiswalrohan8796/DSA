@@ -43,6 +43,36 @@ var rotateLeft = function (head) {
     return ans;
 };
 
+//If k is given too high as compared to length of list , then do modulus of k by length.
+
+var rotateRight = function(head, k) {
+    //annoying edge cases
+    if(!head || !head.next) return head
+    //find length
+    let len = 0
+    let curr = head
+    while(curr) {
+        curr = curr.next
+        len += 1
+    }
+    if (len == k) return head // if len == len of list return as it is
+    if(k > len) {
+        k = Math.floor(k % len) // find how much times to rotate actually
+    }
+    for(let i = 0; i < k; i++) {
+        let curr = head
+        while(curr.next && curr.next.next) {
+            curr = curr.next
+        }
+        let end = curr.next
+        curr.next = null
+        end.next = head
+        head = end
+    }
+    return head
+};
+
+
 // Input:
 // N = 5
 // value[] = {2, 4, 7, 8, 9}
