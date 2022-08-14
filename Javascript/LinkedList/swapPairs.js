@@ -1,5 +1,7 @@
 //https://leetcode.com/problems/swap-nodes-in-pairs/submissions/
 
+//Intution is to add a dummy pointer at beginning.
+
 var swapPairs = function (head) {
     if (head == null || head.next == null) return head;
     let v1 = head;
