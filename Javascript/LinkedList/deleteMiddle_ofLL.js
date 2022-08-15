@@ -1,26 +1,20 @@
 //https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/submissions/
 
 var deleteMiddle = function (head) {
-    if (head == null || head.next == null) return null;
-    let len = 0;
-    let p = head;
-    while (p) {
-        len++;
-        p = p.next;
+    if (!head) return head;
+    if (!head.next) return null;
+    if (!head.next.next) {
+        head.next = null;
+        return head;
     }
-    let mid;
-    if (len % 2 == 0) {
-        mid = len / 2;
-    } else {
-        mid = Math.floor(len / 2);
+    let slow = head;
+    let fast = head;
+    while (fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
     }
-    let curr = head;
-    let i = 0;
-    while (curr && i != mid - 1) {
-        curr = curr.next;
-        i++;
-    }
-    curr.next = curr.next.next;
+    slow.val = slow.next.val;
+    slow.next = slow.next.next;
     return head;
 };
 
