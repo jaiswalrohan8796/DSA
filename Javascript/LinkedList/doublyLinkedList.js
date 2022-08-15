@@ -1,103 +1,149 @@
-class Node {
-    constructor(data) {
-        this.data = data;
-        this.prev = null;
-        this.next = null;
-    }
+function Node(val) {
+    this.val = val;
+    this.next = null;
+    this.prev = null;
 }
-class DoubleLinkedList {
+
+class DoublyLinkedList {
     constructor() {
-        this.start = null;
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
     print() {
+        if (!this.head) {
+            console.log(`DoublyLinkedList is empty :(`);
+            return;
+        }
         let ans = [];
-        if (!this.start) {
-            console.log("List empty");
-        } else {
-            let curr = this.start;
-            while (curr) {
-                ans.push(curr.data);
-                curr = curr.next;
-            }
-            console.log(ans);
+        let curr = this.head;
+        while (curr) {
+            ans.push(curr.val);
+            curr = curr.next;
         }
+        console.log(`DoublyLinkedList : ${ans.join(" <--> ")}`);
     }
-    printReverse() {
+    printRev() {
+        if (!this.tail) {
+            console.log(`DoublyLinkedList is empty :(`);
+            return;
+        }
         let ans = [];
-        if (!this.start) {
-            console.log("List empty");
+        let curr = this.tail;
+        while (curr) {
+            ans.push(curr.val);
+            curr = curr.prev;
+        }
+        console.log(`DoublyLinkedList (Rev) : ${ans.join(" <--> ")}`);
+    }
+    insertAtHead(val) {
+        let node = new Node(val);
+        if (!this.head && !this.tail) {
+            this.head = this.tail = node;
         } else {
-            let curr = this.start;
-            while (curr) {
-                curr = curr.next;
-            }
-            let p = curr;
-            while (p) {
-                ans.push(p.prev);
-                p = p.prev;
-            }
-            console.log(ans);
+            let rest = this.head;
+            this.head = node;
+            node.next = rest;
+            rest.prev = node;
+        }
+        this.size++;
+    }
+    insertAtTail(val) {
+        let node = new Node(val);
+        if (!this.head && !this.tail) {
+            this.head = this.tail = node;
+        } else {
+            let last = this.tail;
+            this.tail = node;
+            last.next = node;
+            node.prev = last;
+        }
+        this.size++;
+    }
+    insertAtPos(val, pos) {
+        if (pos < 0 || pos >= this.size) {
+            console.log("Position is invalid :(");
+            return;
+        }
+        if (pos == 0) {
+            return this.insertAtHead(val);
+        }
+        if (pos == this.size - 1) {
+            return this.insertAtTail(val);
+        }
+        let node = new Node(val);
+        let curr = this.head;
+        while (pos-- && curr.next) {
+            curr = curr.next;
+        }
+        let rest = curr.next;
+        rest.prev = node;
+        node.next = rest;
+        curr.next = node;
+        node.prev = curr;
+        this.size++;
+    }
+    popHead() {
+        if (!this.head) {
+            console.log("DoublyLinkedList is empty :(");
+            return;
+        } else if (this.size == 1) {
+            this.head = this.tail = null;
+            this.size--;
+            return;
+        } else {
+            let nextNode = this.head.next;
+            this.head = this.head.next;
+            nextNode.prev = null;
+            this.size--;
         }
     }
-    insertAtEnd(data) {
-        let newnode = new Node(data);
-        if (!this.start) {
-            this.start = newnode;
+    popTail() {
+        if (!this.tail) {
+            console.log("DoublyLinkedList is empty :(");
+            return;
+        } else if (this.size == 1) {
+            this.tail = this.head = null;
+            this.size--;
         } else {
-            let curr = this.start;
-            while (curr.next) {
-                curr = curr.next;
-            }
-            curr.next  = newnode
-            newnode.prev = curr
+            let previousNode = this.tail.prev;
+            previousNode.next = null;
+            this.tail = previousNode;
+            this.size--;
         }
     }
-    insertAtBegining(data) {
-        let newnode = new Node(data);
-        if (!this.start) {
-            this.start = newnode;
-        } else {
-            newnode.next = this.start;
-            this.start.prev = newnode
-            this.start = newnode;
+    popAtPos(pos) {
+        if (!this.head && !this.tail) {
+            console.log("DoublyLinkedList is empty");
+            return;
         }
-    }
-    traverseFromEnd() {
-        if (!this.start) {
-            console.log("List empty");
-        } else {
-            let curr = this.start;
-            while (curr.next) {
-                curr = curr.next;
-            }
-            while (curr) {
-                console.log(curr.data);
-                curr = curr.prev;
-            }
+        if (pos < 0 || pos >= this.size) {
+            console.log("Position is invalid");
+            return;
         }
-    }
-    popAt(k) {
-        if(!this.start || k < 0) {
-            return
+        if (pos == 0) {
+            return this.popHead();
         }
-        else {
-            let curr = this.start
-            let pos = 0
-            while(pos != k) {
-                curr = curr.next
-                pos++
-            }
-            curr.prev.next = curr.next
-            curr.next.prev = curr.prev
+        if (pos == this.size - 1) {
+            return this.popTail();
         }
+        let curr = this.head;
+        while (--pos && curr.next) {
+            curr = curr.next;
+        }
+        let nextNode = curr.next.next;
+        curr.next = nextNode;
+        nextNode.prev = curr;
+        this.size--;
     }
 }
 
-lst = new DoubleLinkedList();
-lst.insertAtEnd(1);
-lst.insertAtEnd(2);
-lst.insertAtEnd(3);
-lst.insertAtEnd(4);
-lst.insertAtEnd(6);
-lst.popAt(2)
-lst.print()
+dll = new DoublyLinkedList();
+dll.insertAtTail(0);
+dll.insertAtTail(5);
+dll.insertAtTail(10);
+dll.insertAtTail(15);
+dll.insertAtTail(20);
+dll.print();
+dll.popAtPos(3);
+dll.print();
