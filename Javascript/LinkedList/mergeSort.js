@@ -1,6 +1,7 @@
-//leetcode.com/problems/sort-list/
+//https://leetcode.com/problems/sort-list/
 
-https: var sortList = function (head) {
+//TLE : Maximum Call Stack Limit
+var sortList = function (head) {
     if (head === null || head.next === null) {
         return head;
     }
@@ -35,3 +36,44 @@ https: var sortList = function (head) {
     return dummy.next;
 };
 
+//Accepted
+
+function merge(root, l1, l2) {
+    let res = root;
+    while (l1 && l2) {
+        if (l1.val <= l2.val) {
+            res.next = l1;
+            l1 = l1.next;
+        } else {
+            res.next = l2;
+            l2 = l2.next;
+        }
+        res = res.next;
+    }
+    if (l1) {
+        res.next = l1;
+    }
+    if (l2) {
+        res.next = l2;
+    }
+    return root.next;
+}
+function split(node) {
+    let slow = node;
+    let fast = node;
+    while (fast.next && fast.next.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    const left = node;
+    const right = slow.next;
+    slow.next = null;
+    return [left, right];
+}
+var sortList = function (head) {
+    if (!head || head.next == null) return head;
+
+    const [left, right] = split(head);
+    let root = new ListNode(-1);
+    return merge(root, sortList(left), sortList(right));
+};
