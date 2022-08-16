@@ -15,7 +15,7 @@ class StackWithArray {
         return this.list.pop();
     }
     peek() {
-        return this.list[this.list.length - 1];
+        return this.list.at(-1);
     }
 }
 
