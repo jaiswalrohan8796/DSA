@@ -1,7 +1,8 @@
 //https://leetcode.com/problems/min-stack/submissions/
 
 var MinStack = function () {
-    this.list = [];
+    this.stack = [];
+    this.min = [];
 };
 
 /**
@@ -9,40 +10,36 @@ var MinStack = function () {
  * @return {void}
  */
 MinStack.prototype.push = function (val) {
-    this.list.push(val);
+    this.stack.push(val);
+    if (this.min.length > 0) {
+        val = Math.min(val, this.min.at(-1));
+        this.min.push(val);
+    } else {
+        this.min.push(val);
+    }
 };
 
 /**
  * @return {void}
  */
 MinStack.prototype.pop = function () {
-    return this.list.pop();
+    this.stack.pop();
+    this.min.pop();
 };
 
 /**
  * @return {number}
  */
 MinStack.prototype.top = function () {
-    console.log(this.list);
-    return this.list[this.list.length - 1];
+    return this.stack.at(-1);
 };
 
 /**
  * @return {number}
  */
 MinStack.prototype.getMin = function () {
-    let minm = Math.min(...this.list);
-    return minm;
+    return this.min.at(-1);
 };
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * var obj = new MinStack()
- * obj.push(val)
- * obj.pop()
- * var param_3 = obj.top()
- * var param_4 = obj.getMin()
- */
 
 //  Input
 //  ["MinStack","push","push","push","getMin","pop","top","getMin"]
@@ -50,3 +47,8 @@ MinStack.prototype.getMin = function () {
 
 //  Output
 //  [null,null,null,null,-3,null,0,-2]
+
+//Intuition
+//For every node keep track of the minimum element.
+//Use stack to keep min element for every level in main stack
+//If popped from main, also pop from min stack
