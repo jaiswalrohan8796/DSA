@@ -1,5 +1,20 @@
 //https://leetcode.com/problems/symmetric-tree/submissions/
 
+// recursive
+var isSymmetric = function (root) {
+    if (!root) return true;
+    return isSym(root.left, root.right);
+};
+
+function isSym(left, right) {
+    if (left == null && right == null) return true;
+    if (left == null || right == null) return false;
+    if (left.val != right.val) return false;
+    return isSym(left.left, right.right) && isSym(left.right, right.left);
+}
+
+//Naive approach
+
 var isSymmetric = function (root) {
     let left = [];
     let right = [];

@@ -12,14 +12,49 @@ function inOrder(root) {
     }
 }
 
+function iterativeInOrder(root) {
+    let stack = []
+    let res = []
+    let node = root
+    while(true) {
+        if(node != null) {
+            stack.push(node)
+            node = node.left
+        }
+        else {
+            if (stack.length == 0) break;
+            node = stack.pop()
+            res.push(node.data)
+            node = node.right
+        }
+    }
+    return res
+}
+
 function preOrder(root) {
     if (root) {
         console.log(root.data);
         preOrder(root.left);
         preOrder(root.right);
-    } else {
-        console.log(null);
     }
+}
+
+function iterativePreOrder(root) {
+    let res = []
+    let stack = [root]
+    while(stack.length != 0) {
+        let node = stack.pop()
+        if(node) {
+            res.push(node.data)
+            if(node.right) {
+                stack.push(node.right)
+            }
+            if(node.left) {
+                stack.push(node.left)
+            }
+        }
+    }
+    return res
 }
 
 function postOrder(root) {
@@ -30,21 +65,69 @@ function postOrder(root) {
     }
 }
 
+function iterativePostOrder(root) {
+    let s1 = []
+    let s2 = []
+    s1.push(root)
+    while(s1.length != 0) {
+        let node = s1.pop()
+        s2.push(node.data)
+        if(node.left) {
+            s1.push(node.left)
+        }
+        if(node.right) {
+            s1.push(node.right)
+        }
+    }
+    return s2.reverse()
+}
+
 function levelOrder(root) {
-    let stack = [];
-    stack.push(root);
+    let que = [];
+    que.push(root);
     let ans = [];
-    while (stack.length != 0) {
-        node = stack.shift();
+    while (que.length != 0) {
+        node = que.shift();
         ans.push(node.data);
         if (node.left) {
-            stack.push(node.left);
+            que.push(node.left);
         }
         if (node.right) {
-            stack.push(node.right);
+            que.push(node.right);
         }
     }
     console.log(ans);
+}
+
+function allinOneTraversal(root, mode="inOrder") {
+    let preOrder = []
+    let inOrder = []
+    let postOrder = []
+    let stack = [[root,1]]
+    while(stack.length != 0) {
+        let [node, num] = stack.pop()
+        console.log(node.data, num)
+        if(num == 1) {
+            preOrder.push(node.data)
+            stack.push([node, 2])
+            if(node.left) {
+                stack.push([node.left, 1])
+            }
+        }
+        else if(num == 2) {
+            inOrder.push(node.data)
+            stack.push([node, 3])
+            if(node.right) {
+                stack.push([node.right, 1])
+            }
+        }
+        else if(num == 3) {
+            postOrder.push(node.data)
+        }
+    }
+    if(mode == "preOrder") return preOrder
+    if(mode == "inOrder") return inOrder
+    else return postOrder
 }
 
 function searchElement(root, data) {
@@ -76,8 +159,7 @@ bt.left.right = new Node(5);
 // preOrder(bt)
 // console.log("Postorder")
 // postOrder(bt)
-console.log("Levelorder");
-levelOrder(bt);
+// console.log("Levelorder");
+// levelOrder(bt);
 
-searchElement(bt, 5);
-
+console.log(allinOneTraversal(bt,mode="preOrder"))
