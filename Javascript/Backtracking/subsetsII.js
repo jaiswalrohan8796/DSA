@@ -1,5 +1,24 @@
 //https://leetcode.com/problems/subsets-ii/submissions/
 
+//power set approach
+
+var subsetsWithDup = function (nums) {
+    function backtrack(start, temp, res) {
+        res.push([...temp]);
+        for (let i = start; i < nums.length; i++) {
+            if (i > start && nums[i] == nums[i - 1]) continue;
+            temp.push(nums[i]);
+            backtrack(i + 1, temp, res);
+            temp.pop();
+        }
+    }
+    nums.sort();
+    let res = [];
+    backtrack(0, [], res);
+    return res;
+};
+
+// take, not take
 var subsetsWithDup = function (nums) {
     nums = nums.sort((a, b) => a - b);
     const subsets = [];
