@@ -1,20 +1,23 @@
 //https://leetcode.com/problems/permutations/submissions/
 
 var permute = function (nums) {
-    function backtrack(start, temp, res) {
+    function backtrack(temp, res, used) {
         if (temp.length == nums.length) {
             res.push([...temp]);
         } else {
             for (let i = 0; i < nums.length; i++) {
-                if (temp.includes(nums[i])) continue;
+                if (used.has(nums[i])) continue;
                 temp.push(nums[i]);
-                backtrack(i + 1, temp, res);
+                used.set(nums[i])
+                backtrack(temp, res, used);
                 temp.pop();
+                used.delete(nums[i])
             }
         }
     }
     let res = [];
-    backtrack(0, [], res);
+    let used = new Map()
+    backtrack(0, [], res, used);
     return res;
 };
 

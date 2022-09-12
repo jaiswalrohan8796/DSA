@@ -38,16 +38,3 @@ var subsets = function (nums) {
 //Take & Not Take approach
 //IMP : - Make sure to push the copy of build subsets, to avoid pass by reference.
 
-var subsets = function (nums) {
-    function backTrack(start, curr) {
-        subsets.push(curr);
-        for (let i = start; i < nums.length; i++) {
-            curr.push(nums[i]);
-            backTrack(i + 1, curr);
-            curr.pop();
-        }
-    }
-    const subsets = [];
-    backTrack(0, []);
-    return subsets;
-};
