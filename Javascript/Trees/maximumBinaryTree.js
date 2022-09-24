@@ -1,16 +1,25 @@
 //https://leetcode.com/problems/maximum-binary-tree/submissions/
-  
- const constructMaximumBinaryTree = (nums, low = 0, high = nums.length - 1) => {
-    if (low > high) return null
-    let i = low
-    for (let j = low + 1; j <= high; j++) {
-        if (nums[j] > nums[i]) i = j
-    }
-    const root = new TreeNode(nums[i])
-    root.left = constructMaximumBinaryTree(nums, low, i - 1)
-    root.right = constructMaximumBinaryTree(nums, i + 1, high)
-    return root
+
+var constructMaximumBinaryTree = function (nums) {
+    if (nums.length == 0) return null;
+    let [val, pos] = getMax(nums);
+    let root = new TreeNode(val);
+    root.left = constructMaximumBinaryTree(nums.slice(0, pos));
+    root.right = constructMaximumBinaryTree(nums.slice(pos + 1));
+    return root;
 };
+
+function getMax(arr) {
+    let maxx = Number.MIN_SAFE_INTEGER;
+    let pos = null;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > maxx) {
+            maxx = arr[i];
+            pos = i;
+        }
+    }
+    return [maxx, pos];
+}
 
 // Input: nums = [3,2,1,6,0,5]
 // Output: [6,3,5,null,2,0,null,null,1]
