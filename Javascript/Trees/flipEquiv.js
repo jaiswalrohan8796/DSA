@@ -1,5 +1,4 @@
 //https://leetcode.com/problems/flip-equivalent-binary-trees/submissions/
-
 var flipEquiv = function (root1, root2) {
     if (root1 == null || root2 == null) return root1 == root2;
     return (
