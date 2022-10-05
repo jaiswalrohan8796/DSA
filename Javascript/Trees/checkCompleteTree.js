@@ -17,9 +17,3 @@ var isCompleteTree = function (root) {
 };
 
 //Intuition is to check the last level should be all left nodes. If encountered a right node after null, return false.
-
-function kite(hello) {
-    console.log(process)
-}
-
-kite("Hii");

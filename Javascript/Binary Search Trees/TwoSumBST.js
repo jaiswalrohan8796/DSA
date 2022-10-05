@@ -1,25 +1,46 @@
 //https://leetcode.com/problems/two-sum-iv-input-is-a-bst/submissions/
 
-var findTarget = function (root, k) {
-    let arry = [];
-    function inorder(root) {
-        if (root == null) {
-            return;
-        }
-        arry.push(root.val);
-        if (root.left) {
-            inorder(root.left);
-        }
-        if (root.right) {
-            inorder(root.right);
+class BSTIterator {
+    constructor(root, rev = false) {
+        this.stack = [];
+        this.rev = rev;
+        this.insert(root);
+    }
+    insert(node) {
+        while (node) {
+            this.stack.push(node);
+            if (!this.rev) {
+                node = node.left;
+            } else {
+                node = node.right;
+            }
         }
     }
-    inorder(root);
-    for (let i = 0; i < arry.length; i++) {
-        for (let j = i + 1; j < arry.length; j++) {
-            if (arry[i] + arry[j] == k) {
-                return true;
-            }
+    hasNext() {
+        return this.stack.length != 0;
+    }
+    next() {
+        let popped = this.stack.pop();
+        if (!this.rev) {
+            this.insert(popped.right);
+        } else {
+            this.insert(popped.left);
+        }
+        return popped.val;
+    }
+}
+
+var findTarget = function (root, k) {
+    let start = new BSTIterator(root);
+    let end = new BSTIterator(root, true);
+    let i = start.next();
+    let j = end.next();
+    while (i < j) {
+        if (i + j == k) return true;
+        if (i + j < k) {
+            i = start.next();
+        } else if (i + j > k) {
+            j = end.next();
         }
     }
     return false;
