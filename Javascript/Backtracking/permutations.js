@@ -1,5 +1,34 @@
 //https://leetcode.com/problems/permutations/submissions/
 
+
+//swap approach(faster)
+
+var permute = function(nums) {
+    let res = []
+    dfs(0, nums, res)
+    return res
+};
+
+function dfs(idx, nums, res) {
+    if(idx == nums.length) {
+        res.push([...nums])
+        return
+    }
+    for(let i = idx; i < nums.length; i++) {
+        swap(i, idx, nums)
+        dfs(idx+1, nums, res)
+        swap(i, idx, nums)
+    }
+}
+
+function swap(i, j, arr) {
+    let temp = arr[j]
+    arr[j] = arr[i]
+    arr[i] = temp
+}
+
+//array approach
+
 var permute = function (nums) {
     function backtrack(temp, res, used) {
         if (temp.length == nums.length) {
