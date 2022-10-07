@@ -1,5 +1,37 @@
 //https://leetcode.com/problems/palindrome-linked-list/submissions/
 
+//Reverse the second half & compare
+
+var isPalindrome = function (head) {
+    //Base Case
+    if (!head || !head.next) return true;
+    let curr = head;
+    //get middle
+    let slow = head;
+    let fast = head;
+    while (fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    //reverse from middle & get new head
+    let mid = rev(slow);
+    //compare both the list
+    while (mid) {
+        if (mid.val != curr.val) return false;
+        mid = mid.next;
+        curr = curr.next;
+    }
+    return true;
+};
+
+function rev(head) {
+    if (!head || !head.next) return head;
+    let newH = rev(head.next);
+    head.next.next = head;
+    head.next = null;
+    return newH;
+}
+
 //Naive approach
 var isPalindrome = function (head) {
     let ans = [];
