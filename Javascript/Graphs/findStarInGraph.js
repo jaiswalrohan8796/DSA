@@ -1,40 +1,23 @@
 //https://leetcode.com/problems/find-center-of-star-graph/submissions/
 
 var findCenter = function (edges) {
-    function graph() {
-        this.adjacencyList = {};
-    }
-    graph.prototype.addEdge = function (source, dest) {
-        if (!this.adjacencyList[source]) {
-            this.adjacencyList[source] = [];
-        }
-        if (!this.adjacencyList[dest]) {
-            this.adjacencyList[dest] = [];
-        }
-        if (!this.adjacencyList[source].includes(dest)) {
-            this.adjacencyList[source].push(dest);
-        }
-        if (!this.adjacencyList[dest].includes(source)) {
-            this.adjacencyList[dest].push(source);
-        }
-    };
-    graph.prototype.print = function () {
-        console.log(this.adjacencyList);
-    };
-    graph.prototype.findStar = function () {
-        for (let node in this.adjacencyList) {
-            if (this.adjacencyList[node].length == n) {
-                return node;
-            }
-        }
-    };
+    let gp = new Map();
     let n = edges.length;
-    let gp = new graph();
     for (let edge of edges) {
-        gp.addEdge(edge[0], edge[1]);
+        let s = edge[0];
+        let d = edge[1];
+        if (!gp.has(s)) {
+            gp.set(s, []);
+        }
+        if (!gp.has(d)) {
+            gp.set(d, []);
+        }
+        gp.get(s).push(d);
+        gp.get(d).push(s);
     }
-    gp.print();
-    return gp.findStar();
+    for (let key of gp.keys()) {
+        if (gp.get(key).length == n) return key;
+    }
 };
 
 // Input: edges = [[1,2],[5,1],[1,3],[1,4]]

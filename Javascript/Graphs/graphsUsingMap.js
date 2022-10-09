@@ -42,9 +42,49 @@ Graph.prototype.deleteEdge = function (x, y) {
     }
 };
 
+Graph.prototype.BFS = function(node) {
+    let output = []
+    let visited = new Map()
+    let queue = [node]
+    while(queue.length > 0) {
+        let curr = queue.shift()
+        visited.set(curr, 1)
+        output.push(curr)
+        for(let adj of this.adj.get(curr)) {
+            if(!visited.has(adj)) {
+                visited.set(adj, 1)
+                queue.push(adj)
+            }
+        }
+    }
+    console.log(`BFS -> ${output}`)
+    return output
+}
+
+
+Graph.prototype.DFS = function(node) {
+    let output = []
+    let visited = new Map()
+    let stack = [node]
+    while(stack.length > 0) {
+        let curr = stack.pop()
+        visited.set(curr, 1)
+        output.push(curr)
+        for(let adj of this.adj.get(curr)) {
+            if(!visited.has(adj)) {
+                visited.set(adj, 1)
+                stack.push(adj)
+            }
+        }
+    }
+    console.log(`DFS -> ${output}`)
+    return output
+}
+
 gp = new Graph();
 gp.addEdge(1, 2);
 gp.addEdge(1, 3);
 gp.addEdge(2, 3);
-gp.deleteEdge(2, 3);
 gp.print();
+gp.BFS(1)
+gp.DFS(1)
