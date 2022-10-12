@@ -1,98 +1,119 @@
 class MinHeap {
     constructor() {
-        this.storage = [];
-        this.size = 0;
+        this.value = [];
     }
-    getParentIndex(idx) {
-        return Math.floor((idx - 1) / 2);
+
+    add(val) {
+        this.value.push(val);
+        this.bubbleUp(this.value.length - 1);
     }
-    getLeftChildIndex(idx) {
-        return 2 * idx + 1;
+
+    remove() {
+        this.swap(0, this.value.length - 1);
+        const min = this.value.pop();
+        this.trickleDown(0);
+        return min;
     }
-    getRightChildIndex(idx) {
-        return 2 * idx + 2;
-    }
-    hasParent(idx) {
-        return this.getParentIndex(idx) >= 0;
-    }
-    hasLeftChild(idx) {
-        return this.getLeftChildIndex(idx) < this.size;
-    }
-    hasRightChild(idx) {
-        return this.getRightChildIndex(idx) < this.size;
-    }
-    parent(idx) {
-        return this.storage[this.getParentIndex(idx)];
-    }
-    leftChild(idx) {
-        return this.storage[this.getLeftChildIndex(idx)];
-    }
-    rightChild(idx) {
-        return this.storage[this.getRightChildIndex(idx)];
-    }
-    swap(idx1, idx2) {
-        let temp = this.storage[idx1];
-        this.storage[idx1] = this.storage[idx2];
-        this.storage[idx2] = temp;
-    }
-    heapifyUp(idx) {
-        while (
-            this.getParentIndex(idx) &&
-            this.parent[idx] > this.storage[idx]
-        ) {
-            this.swap(this.getParentIndex(idx), idx);
-        }
-        idx = this.getParentIndex(idx);
-    }
-    heapifyDown(idx) {
-        while (this.hasLeftChild(idx)) {
-            let smallerChild = this.getLeftChildIndex(idx);
-            if (
-                this.getRightChildIndex(idx) &&
-                this.rightChild[idx] < this.leftChild[idx]
-            ) {
-                smallerChild = this.getRightChildIndex(idx);
-            }
-            if (this.storage[idx] < this.storage[smallerChild]) {
-                break;
-            } else {
-                this.swap(idx, smallerChild);
-            }
-            idx = smallerChild;
+
+    bubbleUp(idx) {
+        const parent = Math.floor((idx - 1) / 2);
+        let max = idx;
+
+        if (parent >= 0 && this.value[parent] > this.value[max]) max = parent;
+
+        if (max !== idx) {
+            this.swap(max, idx);
+            this.bubbleUp(max);
         }
     }
-    heapifyUpRecursive(idx) {
-        if (this.getParentIndex(idx) && this.parent(idx) > this.storage[idx]) {
-            this.swap(this.getParentIndex(idx), idx);
-            this.heapifyUpRecursive(this.getParentIndex(idx));
+
+    trickleDown(idx) {
+        const leftChild = 2 * idx + 1;
+        const rightChild = 2 * idx + 2;
+        let min = idx;
+
+        if (
+            leftChild < this.value.length &&
+            this.value[leftChild] < this.value[min]
+        )
+            min = leftChild;
+        if (
+            rightChild < this.value.length &&
+            this.value[rightChild] < this.value[min]
+        )
+            min = rightChild;
+
+        if (min !== idx) {
+            this.swap(min, idx);
+            this.trickleDown(min);
         }
     }
-    push(val) {
-        this.storage[this.size] = val;
-        this.size++;
-        this.heapifyUp(this.size - 1);
-    }
-    pop() {
-        if (this.size != 0) {
-            let min = this.storage[0];
-            this.storage[0] = this.storage[this.size - 1];
-            this.size -= 1;
-            this.heapifyDown(0);
-            return min;
-        }
-    }
-    print() {
-        console.log(this.storage)
+
+    swap(i, j) {
+        [this.value[i], this.value[j]] = [this.value[j], this.value[i]];
     }
 }
 
+class MaxHeap {
+    constructor() {
+        this.value = [];
+    }
 
+    add(val) {
+        this.value.push(val);
+        this.bubbleUp(this.value.length - 1);
+    }
 
-let mn = new MinHeap()
-mn.push(2)
-mn.push(4)
-mn.push(1)
-mn.print()
-console.log(mn.pop())
-mn.push(5)
-console.log(mn.pop())
+    remove() {
+        this.swap(0, this.value.length - 1);
+        const max = this.value.pop();
+        this.trickleDown(0);
+        return max;
+    }
+
+    bubbleUp(idx) {
+        const parent = Math.floor((idx - 1) / 2);
+        let min = idx;
+
+        if (parent >= 0 && this.value[parent] < this.value[min]) min = parent;
+
+        if (min !== idx) {
+            this.swap(min, idx);
+            this.bubbleUp(min);
+        }
+    }
+
+    trickleDown(idx) {
+        const leftChild = 2 * idx + 1;
+        const rightChild = 2 * idx + 2;
+        let max = idx;
+
+        if (
+            leftChild < this.value.length &&
+            this.value[leftChild] > this.value[max]
+        )
+            max = leftChild;
+        if (
+            rightChild < this.value.length &&
+            this.value[rightChild] > this.value[max]
+        )
+            max = rightChild;
+
+        if (max !== idx) {
+            this.swap(max, idx);
+            this.trickleDown(max);
+        }
+    }
+
+    swap(i, j) {
+        [this.value[i], this.value[j]] = [this.value[j], this.value[i]];
+    }
+}
+
+// let pq = new MinHeap();
+// pq.add(4);
+// pq.add(6);
+// pq.add(10);
+// pq.add(2)
+
+// console.log(pq.remove());
