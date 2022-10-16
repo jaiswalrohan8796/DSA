@@ -110,10 +110,3 @@ class MaxHeap {
     }
 }
 
-// let pq = new MinHeap();
-// pq.add(4);
-// pq.add(6);
-// pq.add(10);
-// pq.add(2)
-
-// console.log(pq.remove());
