@@ -1,36 +1,43 @@
-//https://practice.geeksforgeeks.org/problems/heap-sort/
+//https://leetcode.com/problems/sort-an-array/
 
-function swap(arr, i, j) {
-  [arr[i], arr[j]] = [arr[j], arr[i]]
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var sortArray = function(nums) {
+    let n = nums.length
+    //start heapifying from lowest parent up till root
+    for(let i = Math.floor((n-1)/2); i >= 0 ; i--) {
+        heapifyDown(nums, n, i)
+    }
+    //removing max to end of the array & reducing array size by 1
+    for(let j = n - 1; j > 0 ; j--) {
+        swap(nums, j, 0)
+        heapifyDown(nums, j, 0)
+    }
+    return nums
+};
+
+
+function heapifyDown(arr, n, i) {
+    let curr = i
+    let left = 2*(i) + 1
+    let right = 2*(i) + 2
+    
+    if(left < n && arr[left] > arr[curr]) {
+        curr = left
+    }
+    if(right < n && arr[right] > arr[curr]) {
+        curr = right
+    }
+    if(i != curr) {
+        swap(arr, i, curr)
+        heapifyDown(arr, n, curr)
+    }
 }
 
-function heapifyDown(arr, size, idx) {
-  let largest = idx
-  let leftI = 2*(idx) + 1
-  let rightI = 2*(idx) + 2
-  if(leftI < size && arr[leftI] > arr[largest]) {
-    largest = leftI
-  }
-  if(rightI < size && arr[rightI] > arr[largest]) {
-    largest = rightI
-  }
-  if(idx != largest) {
-    swap(idx, largest)
-    heapifyDown(arr, size, largest)
-  }
+function swap(arr, i , j) {
+    let tmp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = tmp
 }
-
-
-function heapSort(arr, n) {
-  //heapify the complete array to Max Heap
-  for(let i = Math.floor((i-1)/2); i >= 0; i--) {
-    heapifyDown(arr, n, i)
-  }
-  //shift elements one by one to end & heapify only reduced array
-  for(let j = n-1; j > 0; j--) {
-    swap(arr, 0, j)
-    //heap size reduced at every iteration
-    heapifyDown(arr, j, 0)
-  }
-}
-
