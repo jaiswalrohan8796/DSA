@@ -1,49 +1,40 @@
-//https://leetcode.com/problems/reorganize-string/submissions/
+//https://leetcode.com/problems/distant-barcodes/
 
-//Intuition
-//use Heap to get most freq characters.
-//pop two characaters at a time & reduce the count if ( > 0) push again to heap
-//If one char is remianing check its freq count if > 1 return "", else return ans string.
-
-var reorganizeString = function(s) {
-    let map = new Map()
-    for(let char of s) {
-        if(!map.has(char)) {
-            map.set(char, 1)
-        }
-        else {
-            map.set(char, map.get(char) + 1)
+var rearrangeBarcodes = function (barcodes) {
+    let map = new Map();
+    let hp = new MaxHeap();
+    for (let code of barcodes) {
+        if (!map.has(code)) {
+            map.set(code, 1);
+        } else {
+            map.set(code, map.get(code) + 1);
         }
     }
-    let hp = new MaxHeap()
-    for(let [k, v] of map) {
-        hp.add(k, v)
+    for (let [k, v] of map) {
+        hp.add(k, v);
     }
     // hp.print()
-    let ans = ""
-    while(hp.size() > 1) {
-        let f = hp.remove()
-        let s = hp.remove()
-        ans += f.val
-        ans += s.val
-        f.key -= 1
-        s.key -= 1
-        if(f.key > 0) {
-            hp.add(f.val, f.key)
+    let ans = [];
+    while (hp.size() > 1) {
+        let f = hp.remove();
+        let s = hp.remove();
+        ans.push(f.val);
+        ans.push(s.val);
+        f.key -= 1;
+        s.key -= 1;
+        if (f.key > 0) {
+            hp.add(f.val, f.key);
         }
-        if(s.key > 0) {
-            hp.add(s.val, s.key)
+        if (s.key > 0) {
+            hp.add(s.val, s.key);
         }
     }
-    if(hp.size() != 0) {
-        let last = hp.remove()
-        ans += last.val
-        if(last.key > 1) return ""
+    if (hp.size() >= 1) {
+        let last = hp.remove();
+        ans.push(last.val);
     }
-    return ans
-    
+    return ans;
 };
-
 
 class Data {
     constructor(val, key) {
@@ -63,7 +54,7 @@ class MaxHeap {
         }
     }
     peek() {
-        return this.arr[0]
+        return this.arr[0];
     }
     size() {
         return this.arr.length;
@@ -116,6 +107,3 @@ class MaxHeap {
         }
     }
 }
-
-
-
