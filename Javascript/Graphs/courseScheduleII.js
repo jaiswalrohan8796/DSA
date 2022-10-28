@@ -1,6 +1,6 @@
-//https://leetcode.com/problems/course-schedule/submissions/
+//https://leetcode.com/problems/course-schedule-ii/
 
-var canFinish = function (numCourses, prerequisites) {
+var findOrder = function (numCourses, prerequisites) {
     let gp = new Map();
     let indeg = Array(numCourses).fill(0);
     for (let [u, v] of prerequisites) {
@@ -30,10 +30,5 @@ var canFinish = function (numCourses, prerequisites) {
             }
         }
     }
-    return ans.length == numCourses;
+    return ans.length == numCourses ? ans : [];
 };
-
-// Input: numCourses = 2, prerequisites = [[1,0]]
-// Output: true
-// Explanation: There are a total of 2 courses to take.
-// To take course 1 you should have finished course 0. So it is possible.
