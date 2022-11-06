@@ -1,13 +1,15 @@
 //https://practice.geeksforgeeks.org/problems/minimum-spanning-tree/1?page=1&category[]=Graph&curated[]=1&sortBy=submissions
+
+//Time Out
 class Solution {
     spanningTree(arr, v, e) {
-        function addEdges(index) {
-            for (let [dest, weight] of gp.get(index)) {
-                if (!set.has(dest)) {
-                    hp.add(dest, weight);
-                }
+        // code here
+        function addEdges(node) {
+            for (let edge of gp.get(node)) {
+                hp.add(edge, edge[1]);
             }
         }
+        // code here
         let vertexCount = 0;
         let gp = new Map();
         for (let edge of arr) {
@@ -20,29 +22,25 @@ class Solution {
             if (!gp.has(d)) {
                 gp.set(d, new Array());
             }
-            let s_list = gp.get(s);
-            s_list.push([d, w]);
-            let d_list = gp.get(d);
-            d_list.push([s, w]);
-            gp.set(s, [...s_list]);
-            gp.set(d, [...d_list]);
+            gp.get(s).push([d, w]);
+            gp.get(d).push([s, w]);
         }
-        //console.log(gp)
         let totalWeight = 0;
+        let vis_set = new Set();
         let hp = new MinHeap();
-        let set = new Set();
-        set.add(0);
-        addEdges(0);
-        while (set.size != v) {
-            let node = hp.remove();
-            let dest = node.val;
-            let weight = node.key;
-            if (set.has(dest)) {
+        vis_set.add(1);
+        addEdges(1);
+        while (vis_set.size < v && hp.size() > 0) {
+            let curr = hp.remove();
+            let dest = curr.val[0];
+            let weight = curr.val[1];
+            if (vis_set.has(dest)) {
                 continue;
+            } else {
+                vis_set.add(dest);
+                totalWeight += weight;
+                addEdges(dest);
             }
-            set.add(dest);
-            totalWeight += weight;
-            addEdges(dest);
         }
         return totalWeight;
     }
