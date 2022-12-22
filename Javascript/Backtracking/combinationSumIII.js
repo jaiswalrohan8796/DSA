@@ -2,14 +2,14 @@
 
 var combinationSum3 = function (k, n) {
     let res = [];
-    function backtrack(res, path, k, n, start) {
+    function backtrack(res, path, k, rem, start) {
         if (path.length > k) return;
-        else if (path.length == k && n == 0) {
+        else if (path.length == k && rem == 0) {
             res.push([...path]);
         } else {
             for (let i = start; i <= 9; i++) {
                 path.push(i);
-                backtrack(res, path, k, n - i, i + 1);
+                backtrack(res, path, k, rem - i, i + 1);
                 path.pop();
             }
         }
