@@ -1,16 +1,30 @@
 //https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/submissions/
 
+//Use Hashmaps Time : O(N) , Space : O(N)
+
 var findDisappearedNumbers = function(nums) {
-    let idx = -1
+    let res = []
+    let hmap = new Map()
+    let maxx = nums.length
+    for(let n of nums) {
+        if(!hmap.has(n)) {
+            hmap.set(n, 1)
+        }
+    }
+    for(let i = 1; i <= nums.length; i++) {
+        if(!hmap.has(i)) {
+            res.push(i)
+        }
+    }
+    return res
+};
+
+var findDisappearedNumbers = function(nums) {
     for(let i = 0; i < nums.length; i++) {
-        if(nums[i] < 0) {
-            idx = nums[i] * -1 -1
-        }
-        else {
-            idx = nums[i] - 1
-        }
+        let curr  = Math.abs(nums[i])
+        let idx = curr - 1
         if(nums[idx] > 0) {
-            nums[idx] = - nums[idx]
+            nums[idx] = nums[idx] * (-1)
         }
     }
     let res = []
