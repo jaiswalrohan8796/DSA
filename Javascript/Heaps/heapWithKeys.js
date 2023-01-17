@@ -41,7 +41,7 @@ class MaxHeap {
             this.swap(i, curr);
             this.heapifyUp(curr);
         }
-    }
+    }   
 
     heapifyDown(i) {
         let curr = i;

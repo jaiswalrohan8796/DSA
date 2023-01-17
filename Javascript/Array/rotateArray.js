@@ -1,12 +1,21 @@
 //https://leetcode.com/problems/rotate-array/submissions/
 
+//two pointers
+//1. reverse complete
+//2. rev left of k
+//3. rev right of k (including k)
+
 var rotate = function (nums, k) {
     k = k % nums.length;
-    if (k > nums.length) {
-        nums.reverse();
-    } else {
-        temps = nums.splice(nums.length - k, k);
-        nums.unshift(...temps);
+    rev(nums, 0, nums.length - 1);
+    rev(nums, 0, k - 1);
+    rev(nums, k, nums.length - 1);
+    function rev(nums, lo, hi) {
+        while (lo < hi) {
+            [nums[lo], nums[hi]] = [nums[hi], nums[lo]];
+            lo++;
+            hi--;
+        }
     }
 };
 
