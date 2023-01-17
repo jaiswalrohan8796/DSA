@@ -1,5 +1,30 @@
 //https://leetcode.com/problems/remove-duplicates-from-sorted-array/submissions/
 
+//Two Pointer
+
+var removeDuplicates = function(nums) {
+    let k = 1
+    let idx = 1
+    let curr = 1
+    while(idx < nums.length && curr < nums.length) {
+        if(nums[curr] != nums[curr - 1]) {
+            nums[idx] = nums[curr]
+            idx++
+            curr++
+            k++
+        }
+        else {
+            curr++
+        }
+        if(curr >= nums.length) {
+            break
+        }
+    }
+    return k
+};
+
+//Same but less code
+
 var removeDuplicates = function (nums) {
     let x = 1;
     for (let i = 0; i < nums.length - 1; i++) {
