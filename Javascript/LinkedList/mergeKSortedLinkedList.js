@@ -24,37 +24,39 @@ var mergeKLists = function (lists) {
 
 //O(Nlog(K)) :- Use merge sort algorithm
 
-var mergeKLists = function (lists) {
-    function mergeTwo(l1, l2) {
-        let dummy = new ListNode(-1);
-        let curr = dummy;
-        while (l1 && l2) {
-            if (l1.val < l2.val) {
-                curr.next = l1;
-                l1 = l1.next;
-            } else {
-                curr.next = l2;
-                l2 = l2.next;
-            }
-            curr = curr.next;
-        }
-        if (l1) {
-            curr.next = l1;
-        }
-        if (l2) {
-            curr.next = l2;
-        }
-        return dummy.next;
+function mergeLists(a, b) {
+    const dummy = new ListNode(0);
+    let temp = dummy;
+     while (a !== null && b !== null) {
+         if (a.val < b.val) {
+             temp.next = a;
+             a = a.next;
+         } else {
+             temp.next = b;
+             b = b.next;
+         }
+         temp = temp.next;
+     }
+    if (a !== null) {
+        temp.next = a;
     }
-    if (lists.length == 0 || lists == null) return null;
+    if (b !== null) {
+        temp.next = b;
+    }
+    return dummy.next;
+}
+
+var mergeKLists = function(lists) {
+    if (lists.length === 0 ) {
+        return null;
+    }
+    // two two
+    // priority queue
     while (lists.length > 1) {
-        let mergedList = [];
-        for (let i = 0; i < lists.length; i += 2) {
-            let l1 = lists[i];
-            let l2 = i + 1 < lists.length ? lists[i + 1] : null;
-            mergedList.push(mergeTwo(l1, l2));
-        }
-        lists = mergedList;
+        let a = lists.shift(); // the head will contains the "less" length list
+        let b = lists.shift(); // acturally, we can use the linkedlist to replace it, the while loop will be the while( list.header.next !== null || lists.length > 0)
+        const h = mergeLists(a, b);
+        lists.push(h);
     }
     return lists[0];
 };
